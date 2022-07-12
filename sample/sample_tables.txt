@@ -1,0 +1,30 @@
+mysql1-T2 mysql> select * from replication_metadata;
++----------------------+-----------------------+
+| meta_key             | meta_value            |
++----------------------+-----------------------+
+| replication_channel  | test_channel          |
+| replication_password | Replication_password1 |
+| replication_ssl      | 1                     |
+| replication_user     | replication_user      |
++----------------------+-----------------------+
+4 rows in set (0,00 sec)
+
+mysql1-T2 mysql> select * from source_cluster;
++-----------+---------------+-----------+--------------+
+| cluster   | node_priority | node_name | node_address |
++-----------+---------------+-----------+--------------+
+| clusterT1 |             1 | mysql1-T1 | 10.11.30.208 |
+| clusterT1 |             2 | mysql2-T1 | 10.11.72.237 |
+| clusterT1 |             3 | mysql3-T1 | 10.11.13.109 |
++-----------+---------------+-----------+--------------+
+3 rows in set (0,00 sec)
+
+mysql1-T2 mysql> select * from replica_cluster;
++-----------+---------------+-----------+---------------+
+| cluster   | node_priority | node_name | node_address  |
++-----------+---------------+-----------+---------------+
+| clusterT2 |             1 | mysql1-T2 | 10.11.153.62  |
+| clusterT2 |             2 | mysql2-T2 | 10.11.110.195 |
+| clusterT2 |             3 | mysql3-T2 | 10.11.13.216  |
++-----------+---------------+-----------+---------------+
+3 rows in set (0,00 sec)
