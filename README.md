@@ -15,7 +15,16 @@ Of course. This is what the procedure does:
 6. If replication is configured and not running, get the following source node in the topology and configure replication pointing to it, then quit.
 ## How do I install it?
 1. Configure replication from the source cluster to the replica. Use a channel, you will need to use that channel later. If replication is not running, you should not continue.
-2. Create the tables and procedure.
+2. Create the tables and procedure. Make sure that you install both on the same database. For example you can run:
+
+```
+$ mysql -e "create database percona"
+$ mysql percona < create_tables.sql
+$ mysql percona < replication_managerng.sql
+```
+
+Although it is an untested feature, you could install everything on different databases to run more complex replication topologies. Be careful, the more complex a replication topology is, the more issues you never thought of will appear. Keep your topology as simple as possible.
+
 3. Configure the metadata table. Here you have a sample configuration.
 
 | meta_key             | meta_value            |
@@ -32,9 +41,12 @@ Of course. This is what the procedure does:
 **replication_ssl** if ssl should be enabled.
 
 **replication_user** the username used for replication.
+
 The sql code to insert data into the metadata table is like this:
 
 ```insert into replication_metadata values ('replication_channel','my_replication_channel');```
+
+Use similar code to insert data on the other tables. But you should have some sql knowledge if you want to use this tool.
 
 4. Configure the topology tables.
 These two tables, **source_cluster** and **replica_cluster** contain the nodes and priorities assigned.
