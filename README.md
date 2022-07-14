@@ -89,3 +89,7 @@ We monitor replication topology, not overall replication health. Usually, a prob
 The application can issue a `reset replica all` or a `change master`, in both cases your relay logs will disappear. Make sure that you do not purge the binary logs in the server.
 ## Do you offer any gold support contract for this product?
 This is an open source product. You have two options, one is filling a bug in github and wait until somebody fixes it. There is another (better) option. Read the code, fix the issue and submit the fix. I wrote the code with a lot of comments to reduce the barrier of entry.
+## Why NG?
+This work is partially based on ideas borrowed from [Yves Trudeau](https://github.com/y-trudeau). You can find his script to manage replication here: [replication_manager.sh](https://github.com/y-trudeau/Mysql-tools/tree/master/PXC)
+## I installed this software on my production environment and now my house is burning?
+Please read the license. Sections 15, 16 and 17.
