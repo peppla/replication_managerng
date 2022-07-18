@@ -9,7 +9,7 @@ mysql1-T2 mysql> select * from replication_metadata;
 +----------------------+-----------------------+
 4 rows in set (0,00 sec)
 
-mysql1-T2 mysql> select * from source_cluster;
+mysql1-T1 mysql> select * from source_cluster;
 +-----------+---------------+-----------+--------------+
 | cluster   | node_priority | node_name | node_address |
 +-----------+---------------+-----------+--------------+
