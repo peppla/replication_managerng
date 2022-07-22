@@ -55,6 +55,14 @@ I don't recommend using database events because enabling events on replicas can 
 ## Hey, the sql thread crashed and replication was not fixed... what's wrong?
 We monitor replication topology, not overall replication health. Usually, a problem with replication that appears in when sql code is executed will not be fixed by repointing replicas. You need to fix this before.
 ## Hey, we were XXXXX seconds behing master and the application made all the relay logs disappear. What has happened?
-The application can issue a `reset replica all` or a `change master`, in both cases your relay logs will disappear. Make sure that you do not purge the binary logs in the server.
+The application can issue a `reset replica all` or a `change master`, in both cases your relay logs will disappear. Make sure that you do not purge the binary logs in the server. I added a safeguard that, if the io_thread is not running, it will not issue a change master until all the pending events have been applied. But this only works if does not join the replica cluster a node with better priority.
+## Why do you say better priority instead of higher o lower priority?
+Nodes with lower priority values have higher priority. Less is more. This is a bit confusing, this is why I use the word better.
+## Why don't you use the metadata table to configure the logging instead of using a parameter?
+In case of replication latency this change would be applied when all the pending events are applied. By using a parameter, you can enable or disable logging without worrying about replication delays.
+## I changed replica priorities and nothing happened.
+Did you change the replica priorities while replication was broken or there was replication delay? This is the most probable cause.
+## I changed the source priorities and nothing happened.
+Source priorities are enforced only when there is a failure, otherwise they are ignored. And they just define the order of connection to the source servers when replication stops. To fix this: make sure there is not replication lag, stop the io_thread and run replication_managerng. Repeat as many times as needed to have replication pointing to the desired node.
 ## Do you offer any gold support contract for this product?
 This is an open source product. You have two options, one is filling a bug in github and wait until somebody fixes it. There is another (better) option. Read the code, fix the issue and submit the fix. I wrote the code with a lot of comments to reduce the barrier of entry.
