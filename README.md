@@ -14,7 +14,7 @@ Of course. This is what the procedure does:
 5. Check if replication is configured. If it is not, then configure it pointing to the source node with less priority and quit.
 6. If replication is configured and not running, get the following source node in the topology and configure replication pointing to it, then quit.
 ## How do I install it?
-1. Configure replication from the source cluster to the replica. Use a channel, you will need to use that channel later. If replication is not running, you should not continue.
+1. Configure replication from the source cluster to the replica. Use a channel, you will need to use that channel later. If replication is not running, you should not continue. As a general recommendation, although it is not strictly required, run all your slaves with auto start of replication disabled (skip-slave-start). This is important to avoid a node starting replication after a crash.
 2. Create the tables and procedure. Make sure that you install both on the same database. For example you can run:
 
 ```
@@ -95,6 +95,8 @@ In case of replication latency this change would be applied when all the pending
 Did you change the replica priorities while replication was broken or there was replication delay? This is the most probable cause.
 ## I changed the source priorities and nothing happened.
 Source priorities are enforced only when there is a failure, otherwise they are ignored. And they just define the order of connection to the source servers when replication stops. To fix this: make sure there is not replication lag, stop the io_thread and run replication_managerng. Repeat as many times as needed to have replication pointing to the desired node.
+## Anything else I should know?
+Replication_managerng can configure replication to any of the replication sources as long as it is able to reach it. If there is a partition on your source cluster, the nodes in the minoritary partition can be used as sources for replication. While we plan to fix this in future versions, it is always a good idea to fence or Stonith nodes that are not valid members of a cluster.
 ## Do you offer any gold support contract for this product?
 This is an open source product. You have two options, one is filling a bug in github and wait until somebody fixes it. There is another (better) option. Read the code, fix the issue and submit the fix. I wrote the code with a lot of comments to reduce the barrier of entry.
 ## Why NG?
