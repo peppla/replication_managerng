@@ -1,5 +1,5 @@
 ---
-project_title: The Next Generation Replication Manager
+project_title: TheNextGenerationReplicationManager
 ---
 # Replication Manager NG
 Stateless async replication manager for PXC Clusters
