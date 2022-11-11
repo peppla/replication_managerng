@@ -1,6 +1,3 @@
----
-project_title: TheNextGenerationReplicationManager
----
 # Replication Manager NG
 Stateless async replication manager for PXC Clusters
 ## What does it mean stateless?
